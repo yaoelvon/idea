@@ -1,2 +1,2 @@
 # idea
-关于自己idea
+关于自己的idea
