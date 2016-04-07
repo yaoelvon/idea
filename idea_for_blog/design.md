@@ -30,3 +30,6 @@
     1. 先熟悉hexo的运行原理，完善网站的功能；
     2. 制作自己的主题，取名待定lightMonkey；
     3. 研究如何使用AngulaJS改写前端；
+    4.7 添加
+    使用flask+jinji编写注册系统，参考项目build-a-saas-app-with-flask/catwatch/blueprints/user
+    先用于公司的系统，公司所做项目系统还差一个注册功能；
