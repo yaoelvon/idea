@@ -33,3 +33,6 @@
     4.7 添加
     使用flask+jinji编写注册系统，参考项目build-a-saas-app-with-flask/catwatch/blueprints/user
     先用于公司的系统，公司所做项目系统还差一个注册功能；
+    4.8 添加
+    计划将域名更改为fengyao.me，更加个人化，me表示个人，其他域名弃用。
+    使用自己域名带的邮箱，比如iam@fengyao.me，一个字：帅！
