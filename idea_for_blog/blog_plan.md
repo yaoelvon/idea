@@ -15,3 +15,5 @@ http://riny.net/2014/git-ssh-key/
 http://tmyam.github.io/blog/2014/05/07/duo-githubzhang-hu-she-zhi/
 https://gist.github.com/suziewong/4378434
 https://xuanwo.org/2015/02/07/generate-a-ssh-key/
+
+已完成，地址：http://fengyao.me/2016/04/10/use-git-ssh-key-carry-hexo-deploy/
