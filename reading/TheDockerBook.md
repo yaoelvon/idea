@@ -158,3 +158,118 @@ docker -rm `docker ps -a -q`
 ```
 -a  表示列出所有容器
 -q  表示只需要列出容器的id而不会返回容器的其他信息
+
+
+2016.4.14
+# 使用Docker镜像和仓库
+Docker镜像：用来启动容器的构建基石。
+Docker镜像是由文件系统叠加而成。
+
+最底端是一个引导文件系统，即bootfs，这很像典型的Linux/Unix的引导文件系统。
+    当一个容器启动后，它将会被移到内存中，而引导文件系统则会被卸载，留出更多的内存供initrd磁盘镜像使用。
+
+Docker镜像的第二层是root文件系统rootfs，它位于引导文件系统之上。
+    rootfs可以是一种或多种操作系统（如Debian或者Ubutnu)
+    在Docker里，root文件系统永远只能是只读状态，并且Docker利用联合加载技术又会在root文件系统层上加载更多
+    的只读文件系统。联合加载指的是一次同时加载多个文件系统，但是在外面看起来只能看到一个文件系统。
+    联合加载会将各层文件系统叠加到一起，这样最终的文件系统会包含所有底层的文件和目录。
+
+Docker将这样的文件系统称为镜像。
+    一个镜像可以放到另一个镜像的顶部。位于下面的镜像称为父镜像，可以依次类推，直到镜像栈的最底部，
+    最底部的镜像称为基础镜像。
+
+最后，当从一个镜像启动时，Docker会在该镜像的最顶部加载一个读写文件系统。
+    我们想要在Docker中运行的程序就是在这个读写层中执行的。
+
+当Docker第一次启动一个容器时，初始的读写层是空的。当文件系统发生变化时，这些变化都会应用到这一层。
+
+通常这种机制被称为“写时复制”（copy on write),这也是使Docker如此强大的技术之一。
+    每个只读镜像层都是只读的，并且以后永远不会变化。当创建一个容器时，Docker会构建出一个镜像栈，
+    并在栈的最顶端添加一个读写层。这个读写层再加上其上面的镜像层以及一些配置数据，就构成了一个容器。
+    容器是可以修改的，并且可以启动和停止。容器的这种特点加上镜像分层框架，使我们可以快速构建镜像并
+    运行包含我们自己应用程序和服务的容器。
+
+
+列出镜像    
+```
+docker images
+```
+
+拉取镜像
+```
+docker pull [镜像名]
+```
+
+查找镜像，查找Docker Hub上公共的可用镜像
+```
+docker search
+```
+
+
+构建镜像
+两种方式：
+1.使用docker commit命令
+2.使用docker build命令和Dockerfile文件
+不推荐使用第一种方法，推荐使用第二种方法
+
+Dockerfile使用基本的基于DSL语法的指令来构建一个Docker镜像，然后使用docker build命令基于
+Dockerfile中的指令构建一个新的镜像。
+
+第一个Dockerfile文件
+```
+# Version: 0.0.1
+FROM ubuntu:14.04
+MAINTAINER Feng Yao "me@fengyao.me"
+RUN apt-get update
+RUN apt-get install -y nginx
+RUN echo 'Hi, I am in your container' \
+    > /usr/share/nginx/html/index.html
+EXPOSE 80
+```
+Dockerfile由一系列指令和参数组成。
+Docker大体上按照如下流程执行Dockerfile：
+1.Docker从基础镜像运行一个容器
+2.执行一条指令，对容器进行修改
+3.执行类似docker commit的操作，提交一个新的镜像层
+4.Docker再基于刚提交的镜像运行一个新容器
+5.执行Dockerfile中的下一条指令，直到所有指令都执行完毕
+
+每条RUN指令都会创建一个新的镜像层
+
+EXPOSE指令告诉Docker该容器内的应用程序会使用容器的指定端口。
+这并不意味着可以自动访问任意容器运行中服务的端口。处于安全考虑，
+Docker并不会自动打开该端口，而是需要你在使用docker run运行容器时来指定需要打开哪些端口。
+
+
+基于Dockerfile构建新镜像
+```
+docker build -t="fengyao/static_web" .
+```
+命令中最后的.告诉Docker到本地目录中找Dockerfile文件。
+
+可以指定一个Git仓库的源地址来指定Dockerfile的位置
+```
+docker build -t="fengyao/static_web:v1" git@github.com:fengyao/docker-static_web
+```
+
+构建缓存的取消
+增加--no-cache标志
+```
+docker build --no-cache -t="fengyao/static_web" .
+```
+
+可以使用ENV指令来在镜像中设置环境变量
+
+
+```
+docker images [镜像名]
+docker history [镜像ID]
+```
+
+
+从新镜像启动容器
+```
+docker run -d -p 80 --name static_web fengyao/static_web nginx -g "daemon off;"
+```
+-d  高度docker以分离（detached）方式在后台运行
+-p  用来控制Docker在运行时应该公开哪些网络端口给外部（宿主机）
