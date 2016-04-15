@@ -40,3 +40,6 @@
     昨天去看了阿里云ECS服务器的价格，每个月最低都要一百多，也申请了亚马逊的免费aws，还没进一步使用。
     在build Dockerfile来创建镜像时，本地速度太慢了，准备在daocloud上充20元/月，开通会员，使用daocloud
     编译升级个人博客镜像；
+    4.15 添加
+    成功登陆aws上免费的ubuntu服务器，使用puttygen生成私钥，putty登陆aws云，账户使用ubuthu，密码使用
+    公共dns，指定私钥文件目录。
