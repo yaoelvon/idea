@@ -271,5 +271,134 @@ docker history [镜像ID]
 ```
 docker run -d -p 80 --name static_web fengyao/static_web nginx -g "daemon off;"
 ```
--d  高度docker以分离（detached）方式在后台运行
+-d  告诉docker以分离（detached）方式在后台运行
 -p  用来控制Docker在运行时应该公开哪些网络端口给外部（宿主机）
+
+
+2016.4.17
+运行一个容器时，Docker可以通过两种方法来在宿主机上分配端口。
+1.Docker可以自宿主机上随机选择一个位于49000~49900的一个比较大的端口号来映射到容器的80端口上。
+2.可以在Docker宿主机中指定一个端口，这个端口会连接到容器中的80端口上。
+
+使用docker port来查看容器的端口映射情况：
+```
+sudo docker port [容器ID]  [容器的端口号]
+```
+
+使用-p选项，我们可以灵活的管理容器和宿主机之间的端口映射关系。
+比如，将容器的端口映射到Docker宿主机的某一特定端口上：
+```
+# 将容器内的80端口绑定到本地宿主机的80端口
+sudo docker run -d -p 80:80 --name static_web fengyao/static_web nginx -g "daemon off;"
+```
+
+将端口绑定限制在特定的网络接口上（IP地址）：
+```
+sudo docker run -d -p 127.0.0.1:80:80 --name static_web fengyao/static_web nginx -g "daemon off;"
+```
+
+Docker还提供-P参数，该参数可以用来对外公开在Dockerfile中的EXPOSE指令中设置的所有端口
+```
+sudo docker run -d -P --name static_web fengyao/static_web nginx -g "daemon off;"
+```
+
+使用curl在查看web服务器
+```
+curl localhost:80
+```
+
+
+#
+Dockerfile指令
+CMD
+CMD指令用于指定一个容器启动时要运行的命令。
+跟使用docker run命令启动容器时指定要运行的命令非常类似
+例子：
+CMD ["/bin/bash"]
+CMD ["/bin/bash", "-l"]
+使用docker run命令可以覆盖CMD命令
+在Dockerfile中只能指定一条CMD指令。如果指定了多条，只有最后一条有效。
+如果想在启动容器时运行多个进程或多条命令，可以考虑使用Supervisor这样的服务管理工具。
+
+ENTRYPOINT
+与CMD类似，但是ENTRYPOINT不会被docker run命令中最后的参数所覆盖，实际上，
+最后的参数都会被当做参数传递给ENTRYPOINT命令中指定的命令。
+例子：
+ENTRYPOINT ["/usr/sbin/nginx"]
+ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
+如果确实需要覆盖，可以在docker run时使用--entrypoint标志覆盖ENTRYPOINT命令
+
+WORKDIR
+在容器内部设置一个工作目录，CMD和ENTRYPOINT指定的程序会在这个目录下执行
+docker run可以通过-w标志在运行时覆盖工作目录
+
+ENV
+用来在镜像构建过程中设置环境变量
+这些环境变量会被持久保存在我们镜像创建的任何容器中
+docker run可以通过-e标志来传递环境变量，这些变量只会在运行时有效
+
+USER
+用来指定该镜像以什么样的用户去运行
+docker run使用-u选项来覆盖
+默认用户为root
+
+VOLUME
+用来向基于镜像创建的容器添加卷。
+一个卷可以存在一个或多个容器内的特定目录，这个目录可以绕过联合文件系统。
+卷功能可以让我们可以将数据（如源代码）、数据库或者其他内容添加到镜像中而不是将这些内容提交到镜像中，
+并且运行我们在多个容器间共享这些内容。
+我们可以使用这些功能来测试容器和内部的应用程序代码，管理日志或者处理容器内部的数据库。
+例子：
+VOLUME ["/opt/project"]
+VOLUME ["/opt/project", "/data"]
+
+ADD
+用来将构建环境下的文件和目录复制到镜像中（仅当前目录下的文件）
+文件源也可以使用URL的格式
+会直接将归档文件解开
+ADD指令会使得构建缓存变得无效
+
+COPY
+类似ADD，但COPY只关心构建上下文中复制文件。
+COPY [源文件目录] [目标文件目录]
+源文件目录必须是一个与当前构建环境相对应的文件或目录。
+
+ONBUILD
+为镜像添加触发器
+当一个镜像被用作其他镜像的基础镜像时，该镜像中的触发器将会被执行。
+ONBUILD触发器会按照在父镜像中指定的顺序执行，并且只能被继承一次。
+
+
+#
+将进行推送到Docker Hub
+```
+sudo docker push fengyao/static_web
+```
+推送前需要登录: sudo docker login
+有自动构建功能
+使用github或bitbucket代码库
+设置Dockerfile目录
+
+删除镜像
+```
+# 删除一个镜像
+sudo docker rmi fengyao/static_web
+# 删除多个镜像
+sudo docker rmi fengyao/static_web fengyao/static_web:v1
+# 删除所有镜像
+sudo docker rmi `docker images -a -q`
+```
+
+
+# 
+运行自己的Docker register
+```
+# 启动一个Registry应用的容器，并绑定到本地宿主机的5000端口
+sudo docker run -p 5000:5000 registry
+# 给镜像打上标签
+sudo docker tag [镜像id] docker.example.com:5000/fengyao/static_web
+# 推到新的Registry
+sudo docker push docker.example.com:5000/fengyao/static_web
+```
+
+
