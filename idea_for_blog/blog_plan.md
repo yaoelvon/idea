@@ -16,4 +16,10 @@ http://tmyam.github.io/blog/2014/05/07/duo-githubzhang-hu-she-zhi/
 https://gist.github.com/suziewong/4378434
 https://xuanwo.org/2015/02/07/generate-a-ssh-key/
 
-已完成，地址：http://fengyao.me/2016/04/10/use-git-ssh-key-carry-hexo-deploy/
+已完成：
+hexo deploy使用ssh方式提交
+    地址：http://fengyao.me/2016/04/10/use-git-ssh-key-carry-hexo-deploy/
+
+2.关于flask的配置文件
+    写两篇文章，一篇关于配置的用法，包括基本用法和项目中的用法距离
+                另一篇从源码层分析config的原理，4.18-4.24完成；
