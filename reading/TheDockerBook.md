@@ -402,3 +402,21 @@ sudo docker push docker.example.com:5000/fengyao/static_web
 ```
 
 
+2016.4.20
+#
+在测试中使用Docker
+Docker可用使得开发和测试更加流程化，下面是三种使用场景：
+    1.使用Docker测试一个静态网站。
+    2.使用Docker创建并测试一个Web应用。
+    3.将Docker用于持续集成。
+
+sudo docker run的-v选项，例子：
+```
+sudo docker run -d -p 80 --name website \
+-v $PWD/website:/var/www/html/website \
+fengyao/nginx nginx
+```
+-v选项允许我们将宿主机的目录作为卷，挂载到容器中。
+卷在Docker中非常重要，也很有用。卷是一个或多个容器内被选定
+的目录，可以绕过分层的联合文件系统，为Docker提供持续永久数据或者共享数据。
+这意味着对卷的修改会直接生效，并绕过镜像。当提交或创建镜像时，卷不被包含在镜像内。
