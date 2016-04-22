@@ -50,3 +50,5 @@
     google上收录了fengyao.me网站的网页缓存
     4.21
     增加‘不蒜子’统计访客数量
+    4.22
+    计划将aws上的es2服务器连接到daocloud
