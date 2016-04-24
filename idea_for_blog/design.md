@@ -54,3 +54,6 @@
     计划将aws上的es2服务器连接到daocloud
 	4.23
 	为MacBookPro部署环境，准备用于工作
+    将hexo博客生成的环境从win10移植到os x
+    4.24
+    本周的博文《flask的配置》无法推出了，下周项目上线，加了两天班。空闲时间在搭建MacBookPro的开发环境。
