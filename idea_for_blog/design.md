@@ -57,3 +57,6 @@
     将hexo博客生成的环境从win10移植到os x
     4.24
     本周的博文《flask的配置》无法推出了，下周项目上线，加了两天班。空闲时间在搭建MacBookPro的开发环境。
+    4.25
+     配置MacBookPro上使用ssh连接aws服务器
+     重点在于：1.下载fengyaokey.pem秘钥文件；2.chmod 400 fengyaokey.pem; 3.ssh -i "fengyaokey.pem" ubuntu@[公有DNS]
