@@ -62,3 +62,5 @@
     重点在于：1.下载fengyaokey.pem秘钥文件；2.chmod 400 fengyaokey.pem; 3.ssh -i "fengyaokey.pem" ubuntu@[公有DNS]
     MacBookPro的Mysql数据库的字符设置还有问题，根据网上的教程将database的两个latin-1字符设置改为
     utf8后还是不行,。。。
+    4.26
+    公司项目上线
