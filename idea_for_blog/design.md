@@ -76,3 +76,7 @@
     在macbookpro上安装了win7-32bit虚拟机，刚打开时页面显示的很小，将分辨率调高即可。
     mac上excel文件修改问题，解决方案是：通过qq转发给win7虚拟机，修改后发回来。
     lodop打印问题，通过win7虚拟机进行操作；
+    需要在macbookpro上手动安装office2016
+    5.2
+    在MacBookPro上安装了office2016并进行了破解
+    
