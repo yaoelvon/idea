@@ -79,4 +79,8 @@
     需要在macbookpro上手动安装office2016
     5.2
     在MacBookPro上安装了office2016并进行了破解
+    5.3
+    MacBookPro上，MySQL的问题所在是：flask代码创建数据库表时，表的charset被设为Latin1
+    所以无法导入中文
+    
     
