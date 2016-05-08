@@ -82,5 +82,7 @@
     5.3
     MacBookPro上，MySQL的问题所在是：flask代码创建数据库表时，表的charset被设为Latin1
     所以无法导入中文
+    5.8
+    正在学习Flask-Cache的用法
     
     
