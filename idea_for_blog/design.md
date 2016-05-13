@@ -96,6 +96,13 @@
     使用celery异步来处理大量数据导入的问题，将导入的数据存入某个目录文件中，将目录地址发送给celery task，
     task通过目录地址找到文件，读取后进行处理。
     接下去还要做一个前端数据导入进度条的功能。
+    5.12
+    websocket用来做类似网页客服的功能
+    gulp-karma用来做angularjs测试
+    ionicframework用来打包angular程序用于移动端程序打包
+    5.13
+    安装ionic环境，并跑起来，解决跨域问题；
+    
     
     
     
