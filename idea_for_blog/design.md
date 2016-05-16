@@ -105,6 +105,10 @@
     5.14
     研究angualr的karma单元测试，运行力鹏的代码，总是出错；
     明天准备自己写一个测试跑一下，还有celery多进程执行导入数据前端的框架编写；
-    
+    5.16
+    angularjs的karma测试不通过的原因可能有两点：
+    1.node的版本太低，从v0.12-》v4.4.4
+    2.phantomjs的版本与phantomjs-lancher的版本不匹配，修改为v1.9.8
+
     
     
