@@ -122,3 +122,7 @@
     使用fabric自动化日常管理和部署
     5.26
     强大的sweetalret库，使用修饰器或继承方式来尝试实现测试时接口的登录认证
+    6.5
+    昨天写了新的博文，关于sqlalchemy中filter和filter_by动态过滤
+	6.6
+	python笛卡尔积 and copy问题 
