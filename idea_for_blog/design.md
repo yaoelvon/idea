@@ -126,3 +126,5 @@
     昨天写了新的博文，关于sqlalchemy中filter和filter_by动态过滤
 	6.6
 	python笛卡尔积 and copy问题 
+    6.9
+    login session persist problem and python *args and **kwargs
